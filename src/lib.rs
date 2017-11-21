@@ -9,6 +9,7 @@ use alloc::{String, Vec};
 use plain::Plain;
 
 #[repr(packed)]
+#[derive(Clone, Default, Debug)]
 pub struct Smbios {
     pub anchor: [u8; 4],
     pub checksum: u8,
@@ -27,6 +28,37 @@ pub struct Smbios {
 }
 
 unsafe impl Plain for Smbios {}
+
+impl Smbios {
+    pub fn is_valid(&self) -> bool {
+        //TODO: Checksum
+        self.anchor == *b"_SM_"
+    }
+}
+
+#[repr(packed)]
+#[derive(Clone, Default, Debug)]
+pub struct Smbios3 {
+    pub anchor: [u8; 5],
+    pub checksum: u8,
+    pub length: u8,
+    pub major_version: u8,
+    pub minor_version: u8,
+    pub docrev: u8,
+    pub revision: u8,
+    _reserved: u8,
+    pub table_length: u32,
+    pub table_address: u64,
+}
+
+unsafe impl Plain for Smbios3 {}
+
+impl Smbios3 {
+    pub fn is_valid(&self) -> bool {
+        //TODO: Checksum
+        self.anchor == *b"_SM3_"
+    }
+}
 
 #[repr(packed)]
 #[derive(Clone, Default, Debug)]
