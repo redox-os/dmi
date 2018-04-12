@@ -31,8 +31,15 @@ unsafe impl Plain for Smbios {}
 
 impl Smbios {
     pub fn is_valid(&self) -> bool {
-        //TODO: Checksum
-        self.anchor == *b"_SM_"
+        let mut sum: u8 = self.anchor.iter().fold(0,|a, &b| a + b);
+        sum += self.checksum;
+        sum += self.length;
+        sum += self.major_version;
+        sum += self.minor_version;
+        sum = sum + (self.max_structure_size as u8);
+        sum += self.revision;
+        sum += self.formatted.iter().fold(0,|a, &b| a + b);
+        sum == 0
     }
 }
 
