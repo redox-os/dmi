@@ -1,6 +1,6 @@
 [package]
 name = "dmi"
-version = "0.1.0"
+version = "0.1.1"
 
 [dependencies]
-plain = "0.1"
+plain = "0.2.3"

@@ -126,7 +126,7 @@ pub fn tables(data: &[u8]) -> Vec<Table> {
         // Read header
         let mut header = Header::default();
         {
-            let bytes = header.as_mut_bytes();
+            let bytes = unsafe { plain::as_mut_bytes(&mut header) };
 
             let mut j = 0;
             while i < data.len() && j < bytes.len() {
@@ -144,7 +144,7 @@ pub fn tables(data: &[u8]) -> Vec<Table> {
         //println!("{:?}", header);
 
         // Read data
-        let mut table = vec![0; header.len as usize - header.as_bytes().len()];
+        let mut table = vec![0; header.len as usize - unsafe { plain::as_bytes(&header) }.len()];
 
         {
             let mut j = 0;
