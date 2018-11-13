@@ -5,7 +5,8 @@
 extern crate alloc;
 extern crate plain;
 
-use alloc::{String, Vec};
+use alloc::string::String;
+use alloc::vec::Vec;
 use plain::Plain;
 
 #[repr(packed)]
