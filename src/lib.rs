@@ -119,6 +119,30 @@ pub struct SystemInfo {
 
 unsafe impl Plain for SystemInfo {}
 
+#[repr(packed)]
+#[derive(Default, Debug)]
+pub struct BaseBoardInfo {
+    pub manufacturer: u8,
+    pub product: u8,
+    pub version: u8,
+    pub serial: u8,
+    pub asset_tag: u8,
+}
+
+unsafe impl Plain for BaseBoardInfo {}
+
+#[repr(packed)]
+#[derive(Default, Debug)]
+pub struct ChassisInfo {
+    pub manufacturer: u8,
+    pub kind: u8,
+    pub version: u8,
+    pub serial: u8,
+    pub asset_tag: u8,
+}
+
+unsafe impl Plain for ChassisInfo {}
+
 pub fn tables(data: &[u8]) -> Vec<Table> {
     let mut tables = Vec::new();
 
