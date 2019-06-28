@@ -143,6 +143,35 @@ pub struct ChassisInfo {
 
 unsafe impl Plain for ChassisInfo {}
 
+#[repr(packed)]
+#[derive(Default, Debug)]
+pub struct MemoryDevice {
+    pub array_handle: u16,
+    pub error_information_handle: u16,
+    pub total_width: u16,
+    pub data_width: u16,
+    pub size: u16,
+    pub form_factor: u8,
+    pub device_set: u8,
+    pub device_locator: u8,
+    pub bank_locator: u8,
+    pub memory_kind: u8,
+    pub kind_detail: u16,
+    pub speed: u16,
+    pub manufacturer: u8,
+    pub serial_number: u8,
+    pub asset_tag: u8,
+    pub part_number: u8,
+    pub attributes: u8,
+    pub extended_size: u32,
+    pub configured_speed: u16,
+    pub minimum_voltage: u16,
+    pub maximum_voltage: u16,
+    pub configured_voltage: u16,
+}
+
+unsafe impl Plain for MemoryDevice {}
+
 pub fn tables(data: &[u8]) -> Vec<Table> {
     let mut tables = Vec::new();
 
