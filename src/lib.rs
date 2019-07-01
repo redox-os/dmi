@@ -145,6 +145,36 @@ unsafe impl Plain for ChassisInfo {}
 
 #[repr(packed)]
 #[derive(Default, Debug)]
+pub struct ProcessorInfo {
+    pub socket_designation: u8,
+    pub processor_kind: u8,
+    pub processor_family: u8,
+    pub processor_manufacturer: u8,
+    pub processor_id: u64,
+    pub processor_version: u8,
+    pub voltage: u8,
+    pub external_clock: u16,
+    pub max_speed: u16,
+    pub current_speed: u16,
+    pub status: u8,
+    pub processor_upgrade: u8,
+    pub l1_cache_handle: u16,
+    pub l2_cache_handle: u16,
+    pub l3_cache_handle: u16,
+    pub serial_number: u8,
+    pub asset_tag: u8,
+    pub part_number: u8,
+    pub core_count: u8,
+    pub core_enabled: u8,
+    pub thread_count: u8,
+    pub processor_characteristics: u16,
+    pub processor_family_2: u16,
+}
+
+unsafe impl Plain for ProcessorInfo {}
+
+#[repr(packed)]
+#[derive(Default, Debug)]
 pub struct MemoryDevice {
     pub array_handle: u16,
     pub error_information_handle: u16,
