@@ -8,6 +8,10 @@ extern crate alloc;
 use alloc::{string::String, vec::Vec};
 use plain::Plain;
 
+pub trait TableKind: Plain {
+    const KIND: u8;
+}
+
 #[repr(packed)]
 #[derive(Clone, Copy, Default, Debug)]
 pub struct Smbios {
@@ -85,6 +89,14 @@ pub struct Table {
 }
 
 impl Table {
+    pub fn get<T: TableKind>(&self) -> Option<&T> {
+        if self.header.kind == T::KIND {
+            T::from_bytes(&self.data).ok()
+        } else {
+            None
+        }
+    }
+
     pub fn get_str(&self, index: u8) -> Option<&String> {
         if index > 0 {
             self.strings.get((index - 1) as usize)
@@ -107,6 +119,10 @@ pub struct BiosInfo {
 
 unsafe impl Plain for BiosInfo {}
 
+impl TableKind for BiosInfo {
+    const KIND: u8 = 0;
+}
+
 #[repr(packed)]
 #[derive(Default, Debug)]
 pub struct SystemInfo {
@@ -117,6 +133,10 @@ pub struct SystemInfo {
 }
 
 unsafe impl Plain for SystemInfo {}
+
+impl TableKind for SystemInfo {
+    const KIND: u8 = 1;
+}
 
 #[repr(packed)]
 #[derive(Default, Debug)]
@@ -130,6 +150,10 @@ pub struct BaseBoardInfo {
 
 unsafe impl Plain for BaseBoardInfo {}
 
+impl TableKind for BaseBoardInfo {
+    const KIND: u8 = 2;
+}
+
 #[repr(packed)]
 #[derive(Default, Debug)]
 pub struct ChassisInfo {
@@ -141,6 +165,10 @@ pub struct ChassisInfo {
 }
 
 unsafe impl Plain for ChassisInfo {}
+
+impl TableKind for ChassisInfo {
+    const KIND: u8 = 3;
+}
 
 #[repr(packed)]
 #[derive(Clone, Copy, Default, Debug)]
@@ -172,6 +200,10 @@ pub struct ProcessorInfo {
 
 unsafe impl Plain for ProcessorInfo {}
 
+impl TableKind for ProcessorInfo {
+    const KIND: u8 = 4;
+}
+
 #[repr(packed)]
 #[derive(Clone, Copy, Default, Debug)]
 pub struct MemoryDevice {
@@ -200,6 +232,10 @@ pub struct MemoryDevice {
 }
 
 unsafe impl Plain for MemoryDevice {}
+
+impl TableKind for MemoryDevice {
+    const KIND: u8 = 17;
+}
 
 pub fn tables(data: &[u8]) -> Vec<Table> {
     let mut tables = Vec::new();
