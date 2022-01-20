@@ -1,5 +1,4 @@
 #![cfg_attr(not(feature = "std"), no_std)]
-#![cfg_attr(not(feature = "std"), feature(alloc))]
 
 #[cfg(not(feature = "std"))]
 #[macro_use]
@@ -10,7 +9,7 @@ use alloc::{string::String, vec::Vec};
 use plain::Plain;
 
 #[repr(packed)]
-#[derive(Clone, Default, Debug)]
+#[derive(Clone, Copy, Default, Debug)]
 pub struct Smbios {
     pub anchor: [u8; 4],
     pub checksum: u8,
@@ -45,7 +44,7 @@ impl Smbios {
 }
 
 #[repr(packed)]
-#[derive(Clone, Default, Debug)]
+#[derive(Clone, Copy, Default, Debug)]
 pub struct Smbios3 {
     pub anchor: [u8; 5],
     pub checksum: u8,
@@ -69,7 +68,7 @@ impl Smbios3 {
 }
 
 #[repr(packed)]
-#[derive(Clone, Default, Debug)]
+#[derive(Clone, Copy, Default, Debug)]
 pub struct Header {
     pub kind: u8,
     pub len: u8,
@@ -96,7 +95,7 @@ impl Table {
 }
 
 #[repr(packed)]
-#[derive(Default, Debug)]
+#[derive(Clone, Copy, Default, Debug)]
 pub struct BiosInfo {
     pub vendor: u8,
     pub version: u8,
@@ -144,7 +143,7 @@ pub struct ChassisInfo {
 unsafe impl Plain for ChassisInfo {}
 
 #[repr(packed)]
-#[derive(Default, Debug)]
+#[derive(Clone, Copy, Default, Debug)]
 pub struct ProcessorInfo {
     pub socket_designation: u8,
     pub processor_kind: u8,
@@ -174,7 +173,7 @@ pub struct ProcessorInfo {
 unsafe impl Plain for ProcessorInfo {}
 
 #[repr(packed)]
-#[derive(Default, Debug)]
+#[derive(Clone, Copy, Default, Debug)]
 pub struct MemoryDevice {
     pub array_handle: u16,
     pub error_information_handle: u16,
