@@ -7,6 +7,7 @@ extern crate alloc;
 #[cfg(not(feature = "std"))]
 use alloc::{string::String, vec::Vec};
 use plain::Plain;
+use core::num::Wrapping;
 
 pub trait TableKind: Plain {
     const KIND: u8;
@@ -35,15 +36,15 @@ unsafe impl Plain for Smbios {}
 
 impl Smbios {
     pub fn is_valid(&self) -> bool {
-        let mut sum: u8 = self.anchor.iter().fold(0,|a, &b| a + b);
+        let mut sum: Wrapping<u8> = self.anchor.iter().map(|x| Wrapping(*x)).sum();
         sum += self.checksum;
         sum += self.length;
         sum += self.major_version;
         sum += self.minor_version;
-        sum = sum + (self.max_structure_size as u8);
+        sum += self.max_structure_size as u8;
         sum += self.revision;
-        sum += self.formatted.iter().fold(0,|a, &b| a + b);
-        sum == 0
+        sum += self.formatted.iter().sum::<u8>();
+        sum.0 == 0
     }
 }
 
