@@ -299,9 +299,9 @@ pub fn tables(data: &[u8]) -> Vec<Table> {
         }
 
         tables.push(Table {
-            header: header,
+            header,
             data: table,
-            strings: strings
+            strings,
         });
     }
 
