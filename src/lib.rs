@@ -13,7 +13,7 @@ pub trait TableKind: Plain {
     const KIND: u8;
 }
 
-#[repr(packed)]
+#[repr(C, packed)]
 #[derive(Clone, Copy, Default, Debug)]
 pub struct Smbios {
     pub anchor: [u8; 4],
@@ -48,7 +48,7 @@ impl Smbios {
     }
 }
 
-#[repr(packed)]
+#[repr(C, packed)]
 #[derive(Clone, Copy, Default, Debug)]
 pub struct Smbios3 {
     pub anchor: [u8; 5],
@@ -72,7 +72,7 @@ impl Smbios3 {
     }
 }
 
-#[repr(packed)]
+#[repr(C, packed)]
 #[derive(Clone, Copy, Default, Debug)]
 pub struct Header {
     pub kind: u8,
@@ -107,7 +107,7 @@ impl Table {
     }
 }
 
-#[repr(packed)]
+#[repr(C, packed)]
 #[derive(Clone, Copy, Default, Debug)]
 pub struct BiosInfo {
     pub vendor: u8,
@@ -124,7 +124,7 @@ impl TableKind for BiosInfo {
     const KIND: u8 = 0;
 }
 
-#[repr(packed)]
+#[repr(C, packed)]
 #[derive(Default, Debug)]
 pub struct SystemInfo {
     pub manufacturer: u8,
@@ -139,7 +139,7 @@ impl TableKind for SystemInfo {
     const KIND: u8 = 1;
 }
 
-#[repr(packed)]
+#[repr(C, packed)]
 #[derive(Default, Debug)]
 pub struct BaseBoardInfo {
     pub manufacturer: u8,
@@ -155,7 +155,7 @@ impl TableKind for BaseBoardInfo {
     const KIND: u8 = 2;
 }
 
-#[repr(packed)]
+#[repr(C, packed)]
 #[derive(Default, Debug)]
 pub struct ChassisInfo {
     pub manufacturer: u8,
@@ -171,7 +171,7 @@ impl TableKind for ChassisInfo {
     const KIND: u8 = 3;
 }
 
-#[repr(packed)]
+#[repr(C, packed)]
 #[derive(Clone, Copy, Default, Debug)]
 pub struct ProcessorInfo {
     pub socket_designation: u8,
@@ -205,7 +205,7 @@ impl TableKind for ProcessorInfo {
     const KIND: u8 = 4;
 }
 
-#[repr(packed)]
+#[repr(C, packed)]
 #[derive(Clone, Copy, Default, Debug)]
 pub struct MemoryDevice {
     pub array_handle: u16,
